@@ -70,6 +70,10 @@ print(gorjetas.head(), '\n')
 porcentagem_conta = sns.scatterplot(x = 'valor_da_conta', y = 'porcentagem', data = gorjetas)
 porcentagem_conta.get_figure()
 porcentagem_conta.figure.suptitle('Valor da conta x Gorjeta')
+porcentagem_conta.set_title('Análise do valor da gorjeta em função do valor da conta')
+porcentagem_conta.set(xlabel = 'Valor da conta', ylabel = 'Valor da gojeta')
+porcentagem_conta_img = porcentagem_conta.get_figure()
+porcentagem_conta_img.savefig('image.png')
 plt.show()
 
 #visualmente p valor da conta nao é proporcional ao valor dar gorjeta
