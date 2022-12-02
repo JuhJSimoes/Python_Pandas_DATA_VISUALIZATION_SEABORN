@@ -110,4 +110,13 @@ r = ranksums(sobremesa, sem_sobremesa)
 print('O valor do p-value é {}'.format(r.pvalue))
 
 #Hnull: a distribuição da taxa da gorjeta é a mesma nos 2 grupos.
+
+print(gorjetas.head(), '\n')
+print(gorjetas.dia_da_semana.unique())
+#sns.catplot(x='dia_da_semana', y = 'valor_da_conta', data = gorjetas)
+#sns.relplot(x='valor_da_conta', y = 'porcentagem', hue = 'dia_da_semana', data = gorjetas)
+#sns.relplot(x='valor_da_conta', y = 'gorjeta', hue = 'dia_da_semana', col = 'dia_da_semana', data = gorjetas)
+#sns.relplot(x='valor_da_conta', y = 'porcentagem', hue = 'dia_da_semana', col = 'dia_da_semana', data = gorjetas)
+sns.lmplot(x='valor_da_conta', y = 'porcentagem', hue = 'dia_da_semana', col = 'dia_da_semana', data = gorjetas)
+plt.show()
     
