@@ -112,11 +112,32 @@ print('O valor do p-value é {}'.format(r.pvalue))
 #Hnull: a distribuição da taxa da gorjeta é a mesma nos 2 grupos.
 
 print(gorjetas.head(), '\n')
-print(gorjetas.dia_da_semana.unique())
-#sns.catplot(x='dia_da_semana', y = 'valor_da_conta', data = gorjetas)
-#sns.relplot(x='valor_da_conta', y = 'porcentagem', hue = 'dia_da_semana', data = gorjetas)
-#sns.relplot(x='valor_da_conta', y = 'gorjeta', hue = 'dia_da_semana', col = 'dia_da_semana', data = gorjetas)
-#sns.relplot(x='valor_da_conta', y = 'porcentagem', hue = 'dia_da_semana', col = 'dia_da_semana', data = gorjetas)
+print(gorjetas.dia_da_semana.unique(), '\n')
+'''sns.catplot(x='dia_da_semana', y = 'valor_da_conta', data = gorjetas)
+sns.relplot(x='valor_da_conta', y = 'porcentagem', hue = 'dia_da_semana', data = gorjetas)
+sns.relplot(x='valor_da_conta', y = 'gorjeta', hue = 'dia_da_semana', col = 'dia_da_semana', data = gorjetas)
+sns.relplot(x='valor_da_conta', y = 'porcentagem', hue = 'dia_da_semana', col = 'dia_da_semana', data = gorjetas)
 sns.lmplot(x='valor_da_conta', y = 'porcentagem', hue = 'dia_da_semana', col = 'dia_da_semana', data = gorjetas)
-plt.show()
+plt.show()'''
+
+
+media_geral_gorjetas = gorjetas['gorjeta'].mean()
+print('A média geral das gorjetas é de {}'. format(media_geral_gorjetas),'\n')
+
+medias = gorjetas.groupby(['dia_da_semana']).mean()[['valor_da_conta', 'gorjeta', 'porcentagem']]
+print(medias, '\n')
+
+print('Frequencia dos dias')
+gorjetas['dia_da_semana'].value_counts()
+
+#Teste de hipotese
+#Hnull: a distribuição do valor da conta é igual no sabado e no domingo
+#Halt: a distribuição do valor da conta é igual no sabado e no domingo
+
+valor_conta_domingo = gorjetas.query("dia_da_semana == 'Domingo'").valor_da_conta
+valor_conta_sabado = gorjetas.query("dia_da_semana == 'Sábado'").valor_da_conta
+
+r2 = ranksums(valor_conta_domingo, valor_conta_sabado)
+print('O valor do p-value é {}'.format(r2.pvalue))
+#Hnull: a distribuição do valor da conta é igual no sabado e no domingo
     
