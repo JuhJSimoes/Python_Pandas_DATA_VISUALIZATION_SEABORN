@@ -138,6 +138,46 @@ valor_conta_domingo = gorjetas.query("dia_da_semana == 'Domingo'").valor_da_cont
 valor_conta_sabado = gorjetas.query("dia_da_semana == 'Sábado'").valor_da_conta
 
 r2 = ranksums(valor_conta_domingo, valor_conta_sabado)
-print('O valor do p-value é {}'.format(r2.pvalue))
+print('O valor do p-value é {}'.format(r2.pvalue), '\n')
 #Hnull: a distribuição do valor da conta é igual no sabado e no domingo
     
+    
+print(gorjetas.head(), '\n')
+
+#Análise 4 - Hora do dia
+
+print(gorjetas.hora_do_dia.unique())
+
+#sns.catplot(x ='hora_do_dia', y = 'valor_da_conta', data = gorjetas)
+#sns.catplot(x ='hora_do_dia', y = 'valor_da_conta', kind = 'swarm', data = gorjetas)
+#sns.violinplot(x = 'hora_do_dia', y = 'valor_da_conta', data = gorjetas)
+#sns.boxplot(x = 'hora_do_dia', y = 'valor_da_conta', data = gorjetas)
+almoco = gorjetas.query("hora_do_dia == 'Almoço'").valor_da_conta
+sns.displot(almoco, kde=False)
+
+jantar = gorjetas.query("hora_do_dia == 'Jantar'").valor_da_conta
+sns.displot(jantar, kde=False)
+#plt.show()
+
+print(gorjetas.groupby(['hora_do_dia']).mean()[['valor_da_conta', 'gorjeta', 'porcentagem']], '\n')
+
+#Teste de hipotese
+#Hnull: a distribuição do valor da conta é igual no almoço e no jantar
+#Halt: a distribuição do valor da conta não é igual no almoço e no jantar
+#é menor do que 0.005, logo não são iguais
+
+r2 = ranksums(jantar, almoco)
+print('O valor do p-value é de {}'. format(r2.pvalue.round(3)), '\n')
+
+porcentagem_almoco = gorjetas.query("hora_do_dia == 'Almoço'").porcentagem
+print(porcentagem_almoco, '\n')
+porcentagem_jantar = gorjetas.query("hora_do_dia == 'Jantar'").porcentagem
+print(porcentagem_jantar, '\n')
+
+#Teste de hipotese
+#Hnull: a distribuição da taxa da gorjeta é igual no almoço e no jantar
+#Halt: a distribuição da taxa da gorjeta não é igual no almoço e no jantar
+#é maior do que 0.005, , logo são iguais
+
+r3 = ranksums(porcentagem_almoco, porcentagem_jantar)
+print('O valor do p-value é de {}'. format(r2.pvalue.round(3)), '\n')
